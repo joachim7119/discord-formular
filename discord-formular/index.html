@@ -1,134 +1,87 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Demonstration</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #1d4ed8;
-        }
-        .error {
-            color: #dc2626;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formular</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #111827;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      background: #1f2937;
+      padding: 30px;
+      border-radius: 12px;
+      width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #3b82f6;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="login-card">
-    <h2>Anmelden</h2>
-    
-    <div class="form-group">
-        <label for="username">Benutzername / E-Mail</label>
-        <input type="text" id="username" placeholder="Beispiel@domain.de">
-        <div id="error-username" class="error">Bitte einen Benutzernamen eingeben.</div>
-    </div>
+  <div class="box">
+    <h2>Nachricht senden</h2>
 
-    <div class="form-group">
-        <label for="password">Passwort</label>
-        <input type="password" id="password" placeholder="••••••••">
-        <div id="error-password" class="error">Bitte ein Passwort eingeben.</div>
-    </div>
+    <input id="feld1" placeholder="Erstes Feld">
+    <input id="feld2" placeholder="Zweites Feld">
 
-    <button onclick="verarbeiten()">Einloggen</button>
-</div>
+    <button onclick="senden()">Senden</button>
+  </div>
 
-<script>
-    async function verarbeiten() {
-        const usernameInp = document.getElementById("username");
-        const passwordInp = document.getElementById("password");
-        
-        const errorUsername = document.getElementById("error-username");
-        const errorPassword = document.getElementById("error-password");
+  <script>
+    async function senden() {
+      const feld1 = document.getElementById("feld1").value;
+      const feld2 = document.getElementById("feld2").value;
 
-        // Einfache Validierung
-        let valid = true;
-        
-        if (usernameInp.value.trim() === "") {
-            errorUsername.style.display = "block";
-            valid = false;
-        } else {
-            errorUsername.style.display = "none";
-        }
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          feld1,
+          feld2
+        })
+      });
 
-        if (passwordInp.value.trim() === "") {
-            errorPassword.style.display = "block";
-            valid = false;
-        } else {
-            errorPassword.style.display = "none";
-        }
-
-        if (!valid) return;
-
-        // Senden der Daten an die Backend-Funktion
-        try {
-            const response = await fetch("/api/send", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    feld1: usernameInp.value,
-                    feld2: passwordInp.value
-                })
-            });
-
-            if (response.ok) {
-                alert("Daten erfolgreich übertragen!");
-            } else {
-                alert("Serverfehler beim Übertragen.");
-            }
-        } catch (error) {
-            console.error("Netzwerkfehler:", error);
-            alert("Verbindungsfehler.");
-        }
+      if (response.ok) {
+        alert("Gesendet!");
+      } else {
+        alert("Fehler!");
+      }
     }
-</script>
+  </script>
 
 </body>
 </html>
