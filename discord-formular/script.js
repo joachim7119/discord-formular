@@ -7,17 +7,13 @@ document.getElementById("btn_sig").addEventListener("click", async (e) => {
     try {
         const response = await fetch("/api/send", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                feld1,
-                feld2
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ feld1, feld2 })
         });
 
         if (response.ok) {
-            console.log("Gesendet");
+            // Daten wurden erfolgreich gesendet → weiterleiten
+            window.location.href = "next.html"; // <- hier die gewünschte nächste Seite
         } else {
             console.error("Fehler beim Senden");
         }
